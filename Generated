@@ -1,0 +1,60 @@
+In the world of data processing, schema evolution is a term that carries significant weight. It describes how data pipelines and programs adapt to changes in the structure of the data they process. Within the context of the Common Data Framework (CDF), it becomes imperative to understand how our data pipelines react, or sometimes fail to react, when the schema of a particular data source undergoes modifications.
+
+Data schema changes can manifest in several ways, with the following being the most common scenarios:
+
+1. Adding a New Column
+
+When a new column is introduced to the dataset, it alters the schema, potentially adding valuable information or attributes to the data.
+
+2. Deleting an Existing Column
+
+The removal of a column from the schema signifies the elimination of a specific piece of data. This can be a tricky change to handle, especially when dealing with historical data.
+
+3. Renaming a Column
+
+Column renaming can occur due to various reasons, such as standardizing naming conventions or improving clarity. It impacts the schema as well as any downstream processes reliant on the old column names.
+
+4. Changing the Column's Type
+
+Modifying the data type of a column can affect how data is interpreted and processed, potentially causing issues in downstream systems.
+
+When discussing schema evolution, it is essential to consider the bigger picture. The primary objective is not only to enable the reading of data with the new schema but also to minimize the impact on downstream data consumers.
+
+There are two fundamental categories of schema changes: backward compatible and forward compatible. These classifications carry significant implications for schema evolution scenarios:
+
+Backward Compatible Changes: These changes allow new schema versions to work seamlessly with older versions, ensuring compatibility with existing downstream processes.
+Forward Compatible Changes: These changes enable older schema versions to accommodate new data without breaking, maintaining compatibility with future data sources.
+Let's delve into how these types of changes affect schema evolution:
+
+Schema Change Compatibility Matrix
+Schema Change	Backward Compatibility	Forward Compatibility	Safe for Transformations
+Adding a column with a default value	Yes	Yes	Yes
+Adding a column without a default value	No	Yes	Yes
+Deleting a column with a default value	Yes	Yes	Yes, if you use the previous schema version
+Deleting a column without a default value	Yes	No	No
+Renaming a column with a default value	Yes	Yes	Yes, if you use the previous schema version
+Renaming a column without a default value	No	No	No
+Changing column type	Sometimes	Sometimes	Sometimes
+The matrix above illustrates how different schema changes align with backward and forward compatibility and their safety when applying transformations.
+
+Now, when a new column is added to a data source, and you intend to make this column available in the data warehouse, a corresponding column must be added to the data warehouse schema. This ensures that data consumers have access to the latest information.
+
+However, handling schema changes in data warehouse tables requires a unique approach, especially when dealing with column deletions or renames. If a column is deleted from a source table, it should not necessarily be deleted from the data warehouse table. Data warehouse tables serve as repositories for all data, including historical records. Deleting a column would result in the loss of historical data associated with that column.
+
+When making schema changes to the Data Fabric, it is important to consider the impact on both backward and forward compatibility. If possible, we should make changes that are both backward and forward compatible. This will minimize the disruption to existing data pipelines and applications.
+
+Here are some best practices for schema evolution in the Data Fabric:
+
+Use default values for new columns. This will make the schema change backward compatible.
+Do not delete columns from the data warehouse. This will preserve historical data.
+Rename columns instead of deleting them. This will minimize the impact on downstream data consumers.
+Change column types carefully. This can be a complex operation, and it is important to test the change thoroughly before rolling it out to production.
+
+Therefore, changes to the data warehouse schema should be accumulative. New columns can be added or column types can be changed, but columns should not be deleted. 
+This approach guarantees that historical data remains intact while still accommodating the evolution of data schemas.
+
+There are a few things to keep in mind when handling schema changes in the Data Fabric:
+
+Identify the impacted data pipelines and applications. The first step is to identify all of the data pipelines and applications that will be impacted by the schema change. This will help you to assess the impact of the change and to develop a plan to mitigate any risks.
+Update the data pipelines and applications. Once you have identified the impacted data pipelines and applications, you need to update them to accommodate the schema change. This may involve adding new code, updating existing code, or creating new data pipelines.
+Test the updated data pipelines and applications. Once you have updated the data pipelines and applications, you need to test them thoroughly to make sure that they are working correctly. This will help to identify and fix any problems before the schema change is implemented in production.
