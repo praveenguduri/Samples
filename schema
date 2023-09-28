@@ -1,0 +1,46 @@
+Schema evolution is a commonly used term to
+describe how programs that process data deal with changes to structure of the data. In
+the case of the CDF, we need to understand how our data pipelines will work
+(or not work!) when the schema of a certain data source changes.
+ Here are the most common examples of schema changes:
+ Adding a new column
+ Deleting an existing column
+ Renaming a column
+ Changing the column’s type
+When talking about schema evolution, it is important to keep the larger context in
+mind. Our goal is not only to be able to read the data with the new schema, but also introduce as little impact into the downstream data consumers as possible.
+There are two types of schema changes: backward compatible and forward compatible. This has two consequences for the schema evolution scenarios:
+ As the schema of the data sources or data products changes, we need to adjust
+corresponding table schemas in the data warehouse.
+ Data warehouse table schemas must accumulate changes over time and not
+apply irreversible changes.
+
+Schema change Backward compatibility Forward compatibility Safe for transformations
+Adding a column with
+a default value
+Yes Yes Yes
+Adding a column without a default value
+No Yes Yes
+Deleting a column
+with a default value
+Yes Yes Yes, if you use the previous schema version
+Deleting a column
+without a default value
+Yes No No
+Renaming a column
+with a default value
+Yes Yes Yes, if you use the previous schema version
+Renaming a column
+without a default value
+No No No
+Change column type Sometimes Sometimes Sometimes
+
+ if a new column is
+added to some data source and you want this column to be available in the data warehouse, you will need to add a corresponding column to the data warehouse.
+ You also need to treat schema changes to the data warehouse tables differently
+when it comes to changes like column deletion or column renames. If a column gets
+deleted from a source table, you don’t want to delete it from the data warehouse table
+because data warehouse tables contain all data, including historical data. If we delete
+the column from the data warehouse, we lose the data for this column. This means
+that changes to the data warehouse schema should be accumulative—we can add new
+columns or change column types, but we should not delete columns.
