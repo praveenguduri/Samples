@@ -1,0 +1,1298 @@
+# Complete Northwind OBDA Configuration
+# Merged from northwind_obda.yaml and northwind_obda_v2.yaml
+
+datasource:
+  key: "datasource:northwind"
+  label: "Northwind Database"
+  description: "Northwind sample PostgreSQL database"
+  engine: "postgres"
+  database: "northwind"
+
+tables:
+  - key: "table:northwind.public.customers"
+    label: "Customers"
+    description: "Customers table"
+    datasource_key: "datasource:northwind"
+    schema: "public"
+    table_name: "customers"
+
+  - key: "table:northwind.public.orders"
+    label: "Orders"
+    description: "Orders table"
+    datasource_key: "datasource:northwind"
+    schema: "public"
+    table_name: "orders"
+
+  - key: "table:northwind.public.order_details"
+    label: "Order Details"
+    description: "Order details / line items table"
+    datasource_key: "datasource:northwind"
+    schema: "public"
+    table_name: "order_details"
+
+  - key: "table:northwind.public.products"
+    label: "Products"
+    description: "Products table"
+    datasource_key: "datasource:northwind"
+    schema: "public"
+    table_name: "products"
+
+  - key: "table:northwind.public.categories"
+    label: "Categories"
+    description: "Product categories"
+    datasource_key: "datasource:northwind"
+    schema: "public"
+    table_name: "categories"
+
+  - key: "table:northwind.public.suppliers"
+    label: "Suppliers"
+    description: "Suppliers table"
+    datasource_key: "datasource:northwind"
+    schema: "public"
+    table_name: "suppliers"
+
+  - key: "table:northwind.public.shippers"
+    label: "Shippers"
+    description: "Shippers table"
+    datasource_key: "datasource:northwind"
+    schema: "public"
+    table_name: "shippers"
+
+  - key: "table:northwind.public.employees"
+    label: "Employees"
+    description: "Employees table"
+    datasource_key: "datasource:northwind"
+    schema: "public"
+    table_name: "employees"
+
+  - key: "table:northwind.public.regions"
+    label: "Regions"
+    description: "Regions table"
+    datasource_key: "datasource:northwind"
+    schema: "public"
+    table_name: "regions"
+
+  - key: "table:northwind.public.territories"
+    label: "Territories"
+    description: "Territories table"
+    datasource_key: "datasource:northwind"
+    schema: "public"
+    table_name: "territories"
+
+  - key: "table:northwind.public.customer_demographics"
+    label: "CustomerDemographics"
+    description: "Customer demographic profiles"
+    datasource_key: "datasource:northwind"
+    schema: "public"
+    table_name: "customer_demographics"
+
+  - key: "table:northwind.public.customer_customer_demo"
+    label: "CustomerCustomerDemo"
+    description: "Link table between customers and customer demographics"
+    datasource_key: "datasource:northwind"
+    schema: "public"
+    table_name: "customer_customer_demo"
+
+  - key: "table:northwind.public.employee_territories"
+    label: "EmployeeTerritories"
+    description: "Link table between employees and territories"
+    datasource_key: "datasource:northwind"
+    schema: "public"
+    table_name: "employee_territories"
+
+columns:
+  # Customers
+  - key: "column:northwind.public.customers.CustomerID"
+    label: "CustomerID"
+    table_key: "table:northwind.public.customers"
+    column_name: "CustomerID"
+    datatype: "varchar(5)"
+    nullable: false
+
+  - key: "column:northwind.public.customers.CompanyName"
+    label: "CompanyName"
+    table_key: "table:northwind.public.customers"
+    column_name: "CompanyName"
+    datatype: "varchar(40)"
+    nullable: false
+
+  - key: "column:northwind.public.customers.ContactName"
+    label: "ContactName"
+    table_key: "table:northwind.public.customers"
+    column_name: "ContactName"
+    datatype: "varchar(30)"
+    nullable: true
+
+  - key: "column:northwind.public.customers.ContactTitle"
+    label: "ContactTitle"
+    table_key: "table:northwind.public.customers"
+    column_name: "ContactTitle"
+    datatype: "varchar(30)"
+    nullable: true
+
+  - key: "column:northwind.public.customers.Address"
+    label: "Address"
+    table_key: "table:northwind.public.customers"
+    column_name: "Address"
+    datatype: "varchar(60)"
+    nullable: true
+
+  - key: "column:northwind.public.customers.City"
+    label: "City"
+    table_key: "table:northwind.public.customers"
+    column_name: "City"
+    datatype: "varchar(15)"
+    nullable: true
+
+  - key: "column:northwind.public.customers.Region"
+    label: "Region"
+    table_key: "table:northwind.public.customers"
+    column_name: "Region"
+    datatype: "varchar(15)"
+    nullable: true
+
+  - key: "column:northwind.public.customers.PostalCode"
+    label: "PostalCode"
+    table_key: "table:northwind.public.customers"
+    column_name: "PostalCode"
+    datatype: "varchar(10)"
+    nullable: true
+
+  - key: "column:northwind.public.customers.Country"
+    label: "Country"
+    table_key: "table:northwind.public.customers"
+    column_name: "Country"
+    datatype: "varchar(15)"
+    nullable: true
+
+  - key: "column:northwind.public.customers.Phone"
+    label: "Phone"
+    table_key: "table:northwind.public.customers"
+    column_name: "Phone"
+    datatype: "varchar(24)"
+    nullable: true
+
+  - key: "column:northwind.public.customers.Fax"
+    label: "Fax"
+    table_key: "table:northwind.public.customers"
+    column_name: "Fax"
+    datatype: "varchar(24)"
+    nullable: true
+
+  # Orders
+  - key: "column:northwind.public.orders.OrderID"
+    label: "OrderID"
+    table_key: "table:northwind.public.orders"
+    column_name: "OrderID"
+    datatype: "int"
+    nullable: false
+
+  - key: "column:northwind.public.orders.CustomerID"
+    label: "CustomerID"
+    table_key: "table:northwind.public.orders"
+    column_name: "CustomerID"
+    datatype: "varchar(5)"
+    nullable: true
+
+  - key: "column:northwind.public.orders.EmployeeID"
+    label: "EmployeeID"
+    table_key: "table:northwind.public.orders"
+    column_name: "EmployeeID"
+    datatype: "int"
+    nullable: true
+
+  - key: "column:northwind.public.orders.OrderDate"
+    label: "OrderDate"
+    table_key: "table:northwind.public.orders"
+    column_name: "OrderDate"
+    datatype: "timestamp"
+    nullable: true
+
+  - key: "column:northwind.public.orders.RequiredDate"
+    label: "RequiredDate"
+    table_key: "table:northwind.public.orders"
+    column_name: "RequiredDate"
+    datatype: "timestamp"
+    nullable: true
+
+  - key: "column:northwind.public.orders.ShippedDate"
+    label: "ShippedDate"
+    table_key: "table:northwind.public.orders"
+    column_name: "ShippedDate"
+    datatype: "timestamp"
+    nullable: true
+
+  - key: "column:northwind.public.orders.ShipVia"
+    label: "ShipVia"
+    table_key: "table:northwind.public.orders"
+    column_name: "ShipVia"
+    datatype: "int"
+    nullable: true
+
+  - key: "column:northwind.public.orders.Freight"
+    label: "Freight"
+    table_key: "table:northwind.public.orders"
+    column_name: "Freight"
+    datatype: "decimal(10,4)"
+    nullable: true
+
+  - key: "column:northwind.public.orders.ShipName"
+    label: "ShipName"
+    table_key: "table:northwind.public.orders"
+    column_name: "ShipName"
+    datatype: "varchar(40)"
+    nullable: true
+
+  - key: "column:northwind.public.orders.ShipAddress"
+    label: "ShipAddress"
+    table_key: "table:northwind.public.orders"
+    column_name: "ShipAddress"
+    datatype: "varchar(60)"
+    nullable: true
+
+  - key: "column:northwind.public.orders.ShipCity"
+    label: "ShipCity"
+    table_key: "table:northwind.public.orders"
+    column_name: "ShipCity"
+    datatype: "varchar(15)"
+    nullable: true
+
+  - key: "column:northwind.public.orders.ShipRegion"
+    label: "ShipRegion"
+    table_key: "table:northwind.public.orders"
+    column_name: "ShipRegion"
+    datatype: "varchar(15)"
+    nullable: true
+
+  - key: "column:northwind.public.orders.ShipPostalCode"
+    label: "ShipPostalCode"
+    table_key: "table:northwind.public.orders"
+    column_name: "ShipPostalCode"
+    datatype: "varchar(10)"
+    nullable: true
+
+  - key: "column:northwind.public.orders.ShipCountry"
+    label: "ShipCountry"
+    table_key: "table:northwind.public.orders"
+    column_name: "ShipCountry"
+    datatype: "varchar(15)"
+    nullable: true
+
+  # Order Details
+  - key: "column:northwind.public.order_details.OrderID"
+    label: "OrderID"
+    table_key: "table:northwind.public.order_details"
+    column_name: "OrderID"
+    datatype: "int"
+    nullable: false
+
+  - key: "column:northwind.public.order_details.ProductID"
+    label: "ProductID"
+    table_key: "table:northwind.public.order_details"
+    column_name: "ProductID"
+    datatype: "int"
+    nullable: false
+
+  - key: "column:northwind.public.order_details.UnitPrice"
+    label: "UnitPrice"
+    table_key: "table:northwind.public.order_details"
+    column_name: "UnitPrice"
+    datatype: "decimal(10,4)"
+    nullable: false
+
+  - key: "column:northwind.public.order_details.Quantity"
+    label: "Quantity"
+    table_key: "table:northwind.public.order_details"
+    column_name: "Quantity"
+    datatype: "smallint"
+    nullable: false
+
+  - key: "column:northwind.public.order_details.Discount"
+    label: "Discount"
+    table_key: "table:northwind.public.order_details"
+    column_name: "Discount"
+    datatype: "real"
+    nullable: false
+
+  # Products
+  - key: "column:northwind.public.products.ProductID"
+    label: "ProductID"
+    table_key: "table:northwind.public.products"
+    column_name: "ProductID"
+    datatype: "int"
+    nullable: false
+
+  - key: "column:northwind.public.products.ProductName"
+    label: "ProductName"
+    table_key: "table:northwind.public.products"
+    column_name: "ProductName"
+    datatype: "varchar(40)"
+    nullable: false
+
+  - key: "column:northwind.public.products.SupplierID"
+    label: "SupplierID"
+    table_key: "table:northwind.public.products"
+    column_name: "SupplierID"
+    datatype: "int"
+    nullable: true
+
+  - key: "column:northwind.public.products.CategoryID"
+    label: "CategoryID"
+    table_key: "table:northwind.public.products"
+    column_name: "CategoryID"
+    datatype: "int"
+    nullable: true
+
+  - key: "column:northwind.public.products.QuantityPerUnit"
+    label: "QuantityPerUnit"
+    table_key: "table:northwind.public.products"
+    column_name: "QuantityPerUnit"
+    datatype: "varchar(20)"
+    nullable: true
+
+  - key: "column:northwind.public.products.UnitPrice"
+    label: "UnitPrice"
+    table_key: "table:northwind.public.products"
+    column_name: "UnitPrice"
+    datatype: "decimal(10,4)"
+    nullable: true
+
+  - key: "column:northwind.public.products.UnitsInStock"
+    label: "UnitsInStock"
+    table_key: "table:northwind.public.products"
+    column_name: "UnitsInStock"
+    datatype: "smallint"
+    nullable: true
+
+  - key: "column:northwind.public.products.UnitsOnOrder"
+    label: "UnitsOnOrder"
+    table_key: "table:northwind.public.products"
+    column_name: "UnitsOnOrder"
+    datatype: "smallint"
+    nullable: true
+
+  - key: "column:northwind.public.products.ReorderLevel"
+    label: "ReorderLevel"
+    table_key: "table:northwind.public.products"
+    column_name: "ReorderLevel"
+    datatype: "smallint"
+    nullable: true
+
+  - key: "column:northwind.public.products.Discontinued"
+    label: "Discontinued"
+    table_key: "table:northwind.public.products"
+    column_name: "Discontinued"
+    datatype: "boolean"
+    nullable: false
+
+  # Categories
+  - key: "column:northwind.public.categories.CategoryID"
+    label: "CategoryID"
+    table_key: "table:northwind.public.categories"
+    column_name: "CategoryID"
+    datatype: "int"
+    nullable: false
+
+  - key: "column:northwind.public.categories.CategoryName"
+    label: "CategoryName"
+    table_key: "table:northwind.public.categories"
+    column_name: "CategoryName"
+    datatype: "varchar(15)"
+    nullable: false
+
+  - key: "column:northwind.public.categories.Description"
+    label: "Description"
+    table_key: "table:northwind.public.categories"
+    column_name: "Description"
+    datatype: "text"
+    nullable: true
+
+  # Suppliers
+  - key: "column:northwind.public.suppliers.SupplierID"
+    label: "SupplierID"
+    table_key: "table:northwind.public.suppliers"
+    column_name: "SupplierID"
+    datatype: "int"
+    nullable: false
+
+  - key: "column:northwind.public.suppliers.CompanyName"
+    label: "CompanyName"
+    table_key: "table:northwind.public.suppliers"
+    column_name: "CompanyName"
+    datatype: "varchar(40)"
+    nullable: false
+
+  - key: "column:northwind.public.suppliers.ContactName"
+    label: "ContactName"
+    table_key: "table:northwind.public.suppliers"
+    column_name: "ContactName"
+    datatype: "varchar(30)"
+    nullable: true
+
+  - key: "column:northwind.public.suppliers.ContactTitle"
+    label: "ContactTitle"
+    table_key: "table:northwind.public.suppliers"
+    column_name: "ContactTitle"
+    datatype: "varchar(30)"
+    nullable: true
+
+  - key: "column:northwind.public.suppliers.Address"
+    label: "Address"
+    table_key: "table:northwind.public.suppliers"
+    column_name: "Address"
+    datatype: "varchar(60)"
+    nullable: true
+
+  - key: "column:northwind.public.suppliers.City"
+    label: "City"
+    table_key: "table:northwind.public.suppliers"
+    column_name: "City"
+    datatype: "varchar(15)"
+    nullable: true
+
+  - key: "column:northwind.public.suppliers.Region"
+    label: "Region"
+    table_key: "table:northwind.public.suppliers"
+    column_name: "Region"
+    datatype: "varchar(15)"
+    nullable: true
+
+  - key: "column:northwind.public.suppliers.PostalCode"
+    label: "PostalCode"
+    table_key: "table:northwind.public.suppliers"
+    column_name: "PostalCode"
+    datatype: "varchar(10)"
+    nullable: true
+
+  - key: "column:northwind.public.suppliers.Country"
+    label: "Country"
+    table_key: "table:northwind.public.suppliers"
+    column_name: "Country"
+    datatype: "varchar(15)"
+    nullable: true
+
+  - key: "column:northwind.public.suppliers.Phone"
+    label: "Phone"
+    table_key: "table:northwind.public.suppliers"
+    column_name: "Phone"
+    datatype: "varchar(24)"
+    nullable: true
+
+  - key: "column:northwind.public.suppliers.Fax"
+    label: "Fax"
+    table_key: "table:northwind.public.suppliers"
+    column_name: "Fax"
+    datatype: "varchar(24)"
+    nullable: true
+
+  # Shippers
+  - key: "column:northwind.public.shippers.ShipperID"
+    label: "ShipperID"
+    table_key: "table:northwind.public.shippers"
+    column_name: "ShipperID"
+    datatype: "int"
+    nullable: false
+
+  - key: "column:northwind.public.shippers.CompanyName"
+    label: "CompanyName"
+    table_key: "table:northwind.public.shippers"
+    column_name: "CompanyName"
+    datatype: "varchar(40)"
+    nullable: false
+
+  - key: "column:northwind.public.shippers.Phone"
+    label: "Phone"
+    table_key: "table:northwind.public.shippers"
+    column_name: "Phone"
+    datatype: "varchar(24)"
+    nullable: true
+
+  # Employees
+  - key: "column:northwind.public.employees.EmployeeID"
+    label: "EmployeeID"
+    table_key: "table:northwind.public.employees"
+    column_name: "EmployeeID"
+    datatype: "int"
+    nullable: false
+
+  - key: "column:northwind.public.employees.LastName"
+    label: "LastName"
+    table_key: "table:northwind.public.employees"
+    column_name: "LastName"
+    datatype: "varchar(20)"
+    nullable: false
+
+  - key: "column:northwind.public.employees.FirstName"
+    label: "FirstName"
+    table_key: "table:northwind.public.employees"
+    column_name: "FirstName"
+    datatype: "varchar(10)"
+    nullable: false
+
+  - key: "column:northwind.public.employees.Title"
+    label: "Title"
+    table_key: "table:northwind.public.employees"
+    column_name: "Title"
+    datatype: "varchar(30)"
+    nullable: true
+
+  - key: "column:northwind.public.employees.TitleOfCourtesy"
+    label: "TitleOfCourtesy"
+    table_key: "table:northwind.public.employees"
+    column_name: "TitleOfCourtesy"
+    datatype: "varchar(25)"
+    nullable: true
+
+  - key: "column:northwind.public.employees.BirthDate"
+    label: "BirthDate"
+    table_key: "table:northwind.public.employees"
+    column_name: "BirthDate"
+    datatype: "timestamp"
+    nullable: true
+
+  - key: "column:northwind.public.employees.HireDate"
+    label: "HireDate"
+    table_key: "table:northwind.public.employees"
+    column_name: "HireDate"
+    datatype: "timestamp"
+    nullable: true
+
+  - key: "column:northwind.public.employees.Address"
+    label: "Address"
+    table_key: "table:northwind.public.employees"
+    column_name: "Address"
+    datatype: "varchar(60)"
+    nullable: true
+
+  - key: "column:northwind.public.employees.City"
+    label: "City"
+    table_key: "table:northwind.public.employees"
+    column_name: "City"
+    datatype: "varchar(15)"
+    nullable: true
+
+  - key: "column:northwind.public.employees.Region"
+    label: "Region"
+    table_key: "table:northwind.public.employees"
+    column_name: "Region"
+    datatype: "varchar(15)"
+    nullable: true
+
+  - key: "column:northwind.public.employees.PostalCode"
+    label: "PostalCode"
+    table_key: "table:northwind.public.employees"
+    column_name: "PostalCode"
+    datatype: "varchar(10)"
+    nullable: true
+
+  - key: "column:northwind.public.employees.Country"
+    label: "Country"
+    table_key: "table:northwind.public.employees"
+    column_name: "Country"
+    datatype: "varchar(15)"
+    nullable: true
+
+  - key: "column:northwind.public.employees.HomePhone"
+    label: "HomePhone"
+    table_key: "table:northwind.public.employees"
+    column_name: "HomePhone"
+    datatype: "varchar(24)"
+    nullable: true
+
+  - key: "column:northwind.public.employees.Extension"
+    label: "Extension"
+    table_key: "table:northwind.public.employees"
+    column_name: "Extension"
+    datatype: "varchar(4)"
+    nullable: true
+
+  - key: "column:northwind.public.employees.ReportsTo"
+    label: "ReportsTo"
+    table_key: "table:northwind.public.employees"
+    column_name: "ReportsTo"
+    datatype: "int"
+    nullable: true
+
+  # Regions
+  - key: "column:northwind.public.regions.RegionID"
+    label: "RegionID"
+    table_key: "table:northwind.public.regions"
+    column_name: "RegionID"
+    datatype: "int"
+    nullable: false
+
+  - key: "column:northwind.public.regions.RegionDescription"
+    label: "RegionDescription"
+    table_key: "table:northwind.public.regions"
+    column_name: "RegionDescription"
+    datatype: "varchar(50)"
+    nullable: false
+
+  # Territories
+  - key: "column:northwind.public.territories.TerritoryID"
+    label: "TerritoryID"
+    table_key: "table:northwind.public.territories"
+    column_name: "TerritoryID"
+    datatype: "varchar(20)"
+    nullable: false
+
+  - key: "column:northwind.public.territories.TerritoryDescription"
+    label: "TerritoryDescription"
+    table_key: "table:northwind.public.territories"
+    column_name: "TerritoryDescription"
+    datatype: "varchar(50)"
+    nullable: false
+
+  - key: "column:northwind.public.territories.RegionID"
+    label: "RegionID"
+    table_key: "table:northwind.public.territories"
+    column_name: "RegionID"
+    datatype: "int"
+    nullable: false
+
+  # CustomerDemographics
+  - key: "column:northwind.public.customer_demographics.CustomerTypeID"
+    label: "CustomerTypeID"
+    table_key: "table:northwind.public.customer_demographics"
+    column_name: "CustomerTypeID"
+    datatype: "varchar(10)"
+    nullable: false
+
+  - key: "column:northwind.public.customer_demographics.CustomerDesc"
+    label: "CustomerDesc"
+    table_key: "table:northwind.public.customer_demographics"
+    column_name: "CustomerDesc"
+    datatype: "text"
+    nullable: true
+
+  # CustomerCustomerDemo (link table)
+  - key: "column:northwind.public.customer_customer_demo.CustomerID"
+    label: "CustomerID"
+    table_key: "table:northwind.public.customer_customer_demo"
+    column_name: "CustomerID"
+    datatype: "varchar(5)"
+    nullable: false
+
+  - key: "column:northwind.public.customer_customer_demo.CustomerTypeID"
+    label: "CustomerTypeID"
+    table_key: "table:northwind.public.customer_customer_demo"
+    column_name: "CustomerTypeID"
+    datatype: "varchar(10)"
+    nullable: false
+
+  # EmployeeTerritories (link table)
+  - key: "column:northwind.public.employee_territories.EmployeeID"
+    label: "EmployeeID"
+    table_key: "table:northwind.public.employee_territories"
+    column_name: "EmployeeID"
+    datatype: "int"
+    nullable: false
+
+  - key: "column:northwind.public.employee_territories.TerritoryID"
+    label: "TerritoryID"
+    table_key: "table:northwind.public.employee_territories"
+    column_name: "TerritoryID"
+    datatype: "varchar(20)"
+    nullable: false
+
+class_mappings:
+  - key: "mapping:class:Customer"
+    label: "CustomerClassMapping"
+    class_iri: "http://example.org/northwind#Customer"
+    table_key: "table:northwind.public.customers"
+    table_name: "customers"
+    pk_columns:
+      - "column:northwind.public.customers.CustomerID"
+
+  - key: "mapping:class:Order"
+    label: "OrderClassMapping"
+    class_iri: "http://example.org/northwind#Order"
+    table_key: "table:northwind.public.orders"
+    table_name: "orders"
+    pk_columns:
+      - "column:northwind.public.orders.OrderID"
+
+  - key: "mapping:class:OrderDetail"
+    label: "OrderDetailClassMapping"
+    class_iri: "http://example.org/northwind#OrderDetail"
+    table_key: "table:northwind.public.order_details"
+    table_name: "order_details"
+    pk_columns:
+      - "column:northwind.public.order_details.OrderID"
+      - "column:northwind.public.order_details.ProductID"
+
+  - key: "mapping:class:Product"
+    label: "ProductClassMapping"
+    class_iri: "http://example.org/northwind#Product"
+    table_key: "table:northwind.public.products"
+    table_name: "products"
+    pk_columns:
+      - "column:northwind.public.products.ProductID"
+
+  - key: "mapping:class:Category"
+    label: "CategoryClassMapping"
+    class_iri: "http://example.org/northwind#Category"
+    table_key: "table:northwind.public.categories"
+    table_name: "categories"
+    pk_columns:
+      - "column:northwind.public.categories.CategoryID"
+
+  - key: "mapping:class:Supplier"
+    label: "SupplierClassMapping"
+    class_iri: "http://example.org/northwind#Supplier"
+    table_key: "table:northwind.public.suppliers"
+    table_name: "suppliers"
+    pk_columns:
+      - "column:northwind.public.suppliers.SupplierID"
+
+  - key: "mapping:class:Employee"
+    label: "EmployeeClassMapping"
+    class_iri: "http://example.org/northwind#Employee"
+    table_key: "table:northwind.public.employees"
+    table_name: "employees"
+    pk_columns:
+      - "column:northwind.public.employees.EmployeeID"
+
+  - key: "mapping:class:Shipper"
+    label: "ShipperClassMapping"
+    class_iri: "http://example.org/northwind#Shipper"
+    table_key: "table:northwind.public.shippers"
+    table_name: "shippers"
+    pk_columns:
+      - "column:northwind.public.shippers.ShipperID"
+
+  - key: "mapping:class:Region"
+    label: "RegionClassMapping"
+    class_iri: "http://example.org/northwind#Region"
+    table_key: "table:northwind.public.regions"
+    table_name: "regions"
+    pk_columns:
+      - "column:northwind.public.regions.RegionID"
+
+  - key: "mapping:class:Territory"
+    label: "TerritoryClassMapping"
+    class_iri: "http://example.org/northwind#Territory"
+    table_key: "table:northwind.public.territories"
+    table_name: "territories"
+    pk_columns:
+      - "column:northwind.public.territories.TerritoryID"
+
+  - key: "mapping:class:CustomerDemographic"
+    label: "CustomerDemographicClassMapping"
+    class_iri: "http://example.org/northwind#CustomerDemographic"
+    table_key: "table:northwind.public.customer_demographics"
+    table_name: "customer_demographics"
+    pk_columns:
+      - "column:northwind.public.customer_demographics.CustomerTypeID"
+
+property_mappings:
+  # ========================================================================
+  # DATA PROPERTY MAPPINGS
+  # ========================================================================
+
+  # Customer data properties
+  - key: "mapping:prop:Customer.customerId"
+    label: "CustomerIdMapping"
+    property_iri: "http://example.org/northwind#customerId"
+    column_key: "column:northwind.public.customers.CustomerID"
+    kind: "data"
+
+  - key: "mapping:prop:Customer.customerCompanyName"
+    label: "CustomerCompanyNameMapping"
+    property_iri: "http://example.org/northwind#customerCompanyName"
+    column_key: "column:northwind.public.customers.CompanyName"
+    kind: "data"
+
+  - key: "mapping:prop:Customer.customerContactName"
+    label: "CustomerContactNameMapping"
+    property_iri: "http://example.org/northwind#customerContactName"
+    column_key: "column:northwind.public.customers.ContactName"
+    kind: "data"
+
+  - key: "mapping:prop:Customer.customerContactTitle"
+    label: "CustomerContactTitleMapping"
+    property_iri: "http://example.org/northwind#customerContactTitle"
+    column_key: "column:northwind.public.customers.ContactTitle"
+    kind: "data"
+
+  - key: "mapping:prop:Customer.customerAddress"
+    label: "CustomerAddressMapping"
+    property_iri: "http://example.org/northwind#customerAddress"
+    column_key: "column:northwind.public.customers.Address"
+    kind: "data"
+
+  - key: "mapping:prop:Customer.customerCity"
+    label: "CustomerCityMapping"
+    property_iri: "http://example.org/northwind#customerCity"
+    column_key: "column:northwind.public.customers.City"
+    kind: "data"
+
+  - key: "mapping:prop:Customer.customerRegion"
+    label: "CustomerRegionMapping"
+    property_iri: "http://example.org/northwind#customerRegion"
+    column_key: "column:northwind.public.customers.Region"
+    kind: "data"
+
+  - key: "mapping:prop:Customer.customerPostalCode"
+    label: "CustomerPostalCodeMapping"
+    property_iri: "http://example.org/northwind#customerPostalCode"
+    column_key: "column:northwind.public.customers.PostalCode"
+    kind: "data"
+
+  - key: "mapping:prop:Customer.customerCountry"
+    label: "CustomerCountryMapping"
+    property_iri: "http://example.org/northwind#customerCountry"
+    column_key: "column:northwind.public.customers.Country"
+    kind: "data"
+
+  - key: "mapping:prop:Customer.customerPhone"
+    label: "CustomerPhoneMapping"
+    property_iri: "http://example.org/northwind#customerPhone"
+    column_key: "column:northwind.public.customers.Phone"
+    kind: "data"
+
+  - key: "mapping:prop:Customer.customerFax"
+    label: "CustomerFaxMapping"
+    property_iri: "http://example.org/northwind#customerFax"
+    column_key: "column:northwind.public.customers.Fax"
+    kind: "data"
+
+  # Order data properties
+  - key: "mapping:prop:Order.orderId"
+    label: "OrderIdMapping"
+    property_iri: "http://example.org/northwind#orderId"
+    column_key: "column:northwind.public.orders.OrderID"
+    kind: "data"
+
+  - key: "mapping:prop:Order.orderDate"
+    label: "OrderDateMapping"
+    property_iri: "http://example.org/northwind#orderDate"
+    column_key: "column:northwind.public.orders.OrderDate"
+    kind: "data"
+
+  - key: "mapping:prop:Order.requiredDate"
+    label: "RequiredDateMapping"
+    property_iri: "http://example.org/northwind#requiredDate"
+    column_key: "column:northwind.public.orders.RequiredDate"
+    kind: "data"
+
+  - key: "mapping:prop:Order.shippedDate"
+    label: "ShippedDateMapping"
+    property_iri: "http://example.org/northwind#shippedDate"
+    column_key: "column:northwind.public.orders.ShippedDate"
+    kind: "data"
+
+  - key: "mapping:prop:Order.freight"
+    label: "FreightMapping"
+    property_iri: "http://example.org/northwind#freight"
+    column_key: "column:northwind.public.orders.Freight"
+    kind: "data"
+
+  - key: "mapping:prop:Order.shipName"
+    label: "ShipNameMapping"
+    property_iri: "http://example.org/northwind#shipName"
+    column_key: "column:northwind.public.orders.ShipName"
+    kind: "data"
+
+  - key: "mapping:prop:Order.orderShipAddress"
+    label: "ShipAddressMapping"
+    property_iri: "http://example.org/northwind#orderShipAddress"
+    column_key: "column:northwind.public.orders.ShipAddress"
+    kind: "data"
+
+  - key: "mapping:prop:Order.orderShipCity"
+    label: "ShipCityMapping"
+    property_iri: "http://example.org/northwind#orderShipCity"
+    column_key: "column:northwind.public.orders.ShipCity"
+    kind: "data"
+
+  - key: "mapping:prop:Order.orderShipRegion"
+    label: "ShipRegionMapping"
+    property_iri: "http://example.org/northwind#orderShipRegion"
+    column_key: "column:northwind.public.orders.ShipRegion"
+    kind: "data"
+
+  - key: "mapping:prop:Order.orderShipPostalCode"
+    label: "ShipPostalCodeMapping"
+    property_iri: "http://example.org/northwind#orderShipPostalCode"
+    column_key: "column:northwind.public.orders.ShipPostalCode"
+    kind: "data"
+
+  - key: "mapping:prop:Order.orderShipCountry"
+    label: "ShipCountryMapping"
+    property_iri: "http://example.org/northwind#orderShipCountry"
+    column_key: "column:northwind.public.orders.ShipCountry"
+    kind: "data"
+
+  # OrderDetail data properties
+  - key: "mapping:prop:OrderDetail.orderDetailUnitPrice"
+    label: "OrderDetailUnitPriceMapping"
+    property_iri: "http://example.org/northwind#orderDetailUnitPrice"
+    column_key: "column:northwind.public.order_details.UnitPrice"
+    kind: "data"
+
+  - key: "mapping:prop:OrderDetail.orderDetailQuantity"
+    label: "OrderDetailQuantityMapping"
+    property_iri: "http://example.org/northwind#orderDetailQuantity"
+    column_key: "column:northwind.public.order_details.Quantity"
+    kind: "data"
+
+  - key: "mapping:prop:OrderDetail.orderDetailDiscount"
+    label: "OrderDetailDiscountMapping"
+    property_iri: "http://example.org/northwind#orderDetailDiscount"
+    column_key: "column:northwind.public.order_details.Discount"
+    kind: "data"
+
+  # Product data properties
+  - key: "mapping:prop:Product.productId"
+    label: "ProductIdMapping"
+    property_iri: "http://example.org/northwind#productId"
+    column_key: "column:northwind.public.products.ProductID"
+    kind: "data"
+
+  - key: "mapping:prop:Product.productName"
+    label: "ProductNameMapping"
+    property_iri: "http://example.org/northwind#productName"
+    column_key: "column:northwind.public.products.ProductName"
+    kind: "data"
+
+  - key: "mapping:prop:Product.quantityPerUnit"
+    label: "QuantityPerUnitMapping"
+    property_iri: "http://example.org/northwind#quantityPerUnit"
+    column_key: "column:northwind.public.products.QuantityPerUnit"
+    kind: "data"
+
+  - key: "mapping:prop:Product.unitPrice"
+    label: "ProductUnitPriceMapping"
+    property_iri: "http://example.org/northwind#unitPrice"
+    column_key: "column:northwind.public.products.UnitPrice"
+    kind: "data"
+
+  - key: "mapping:prop:Product.unitsInStock"
+    label: "UnitsInStockMapping"
+    property_iri: "http://example.org/northwind#unitsInStock"
+    column_key: "column:northwind.public.products.UnitsInStock"
+    kind: "data"
+
+  - key: "mapping:prop:Product.unitsOnOrder"
+    label: "UnitsOnOrderMapping"
+    property_iri: "http://example.org/northwind#unitsOnOrder"
+    column_key: "column:northwind.public.products.UnitsOnOrder"
+    kind: "data"
+
+  - key: "mapping:prop:Product.reorderLevel"
+    label: "ReorderLevelMapping"
+    property_iri: "http://example.org/northwind#reorderLevel"
+    column_key: "column:northwind.public.products.ReorderLevel"
+    kind: "data"
+
+  - key: "mapping:prop:Product.discontinued"
+    label: "DiscontinuedMapping"
+    property_iri: "http://example.org/northwind#discontinued"
+    column_key: "column:northwind.public.products.Discontinued"
+    kind: "data"
+
+  # Category data properties
+  - key: "mapping:prop:Category.categoryId"
+    label: "CategoryIdMapping"
+    property_iri: "http://example.org/northwind#categoryId"
+    column_key: "column:northwind.public.categories.CategoryID"
+    kind: "data"
+
+  - key: "mapping:prop:Category.categoryName"
+    label: "CategoryNameMapping"
+    property_iri: "http://example.org/northwind#categoryName"
+    column_key: "column:northwind.public.categories.CategoryName"
+    kind: "data"
+
+  - key: "mapping:prop:Category.categoryDescription"
+    label: "CategoryDescriptionMapping"
+    property_iri: "http://example.org/northwind#categoryDescription"
+    column_key: "column:northwind.public.categories.Description"
+    kind: "data"
+
+  # Supplier data properties
+  - key: "mapping:prop:Supplier.supplierId"
+    label: "SupplierIdMapping"
+    property_iri: "http://example.org/northwind#supplierId"
+    column_key: "column:northwind.public.suppliers.SupplierID"
+    kind: "data"
+
+  - key: "mapping:prop:Supplier.supplierCompanyName"
+    label: "SupplierCompanyNameMapping"
+    property_iri: "http://example.org/northwind#supplierCompanyName"
+    column_key: "column:northwind.public.suppliers.CompanyName"
+    kind: "data"
+
+  - key: "mapping:prop:Supplier.supplierContactName"
+    label: "SupplierContactNameMapping"
+    property_iri: "http://example.org/northwind#supplierContactName"
+    column_key: "column:northwind.public.suppliers.ContactName"
+    kind: "data"
+
+  - key: "mapping:prop:Supplier.supplierContactTitle"
+    label: "SupplierContactTitleMapping"
+    property_iri: "http://example.org/northwind#supplierContactTitle"
+    column_key: "column:northwind.public.suppliers.ContactTitle"
+    kind: "data"
+
+  - key: "mapping:prop:Supplier.supplierAddress"
+    label: "SupplierAddressMapping"
+    property_iri: "http://example.org/northwind#supplierAddress"
+    column_key: "column:northwind.public.suppliers.Address"
+    kind: "data"
+
+  - key: "mapping:prop:Supplier.supplierCity"
+    label: "SupplierCityMapping"
+    property_iri: "http://example.org/northwind#supplierCity"
+    column_key: "column:northwind.public.suppliers.City"
+    kind: "data"
+
+  - key: "mapping:prop:Supplier.supplierRegion"
+    label: "SupplierRegionMapping"
+    property_iri: "http://example.org/northwind#supplierRegion"
+    column_key: "column:northwind.public.suppliers.Region"
+    kind: "data"
+
+  - key: "mapping:prop:Supplier.supplierPostalCode"
+    label: "SupplierPostalCodeMapping"
+    property_iri: "http://example.org/northwind#supplierPostalCode"
+    column_key: "column:northwind.public.suppliers.PostalCode"
+    kind: "data"
+
+  - key: "mapping:prop:Supplier.supplierCountry"
+    label: "SupplierCountryMapping"
+    property_iri: "http://example.org/northwind#supplierCountry"
+    column_key: "column:northwind.public.suppliers.Country"
+    kind: "data"
+
+  - key: "mapping:prop:Supplier.supplierPhone"
+    label: "SupplierPhoneMapping"
+    property_iri: "http://example.org/northwind#supplierPhone"
+    column_key: "column:northwind.public.suppliers.Phone"
+    kind: "data"
+
+  - key: "mapping:prop:Supplier.supplierFax"
+    label: "SupplierFaxMapping"
+    property_iri: "http://example.org/northwind#supplierFax"
+    column_key: "column:northwind.public.suppliers.Fax"
+    kind: "data"
+
+  # Employee data properties
+  - key: "mapping:prop:Employee.employeeId"
+    label: "EmployeeIdMapping"
+    property_iri: "http://example.org/northwind#employeeId"
+    column_key: "column:northwind.public.employees.EmployeeID"
+    kind: "data"
+
+  - key: "mapping:prop:Employee.employeeLastName"
+    label: "EmployeeLastNameMapping"
+    property_iri: "http://example.org/northwind#employeeLastName"
+    column_key: "column:northwind.public.employees.LastName"
+    kind: "data"
+
+  - key: "mapping:prop:Employee.employeeFirstName"
+    label: "EmployeeFirstNameMapping"
+    property_iri: "http://example.org/northwind#employeeFirstName"
+    column_key: "column:northwind.public.employees.FirstName"
+    kind: "data"
+
+  - key: "mapping:prop:Employee.employeeTitle"
+    label: "EmployeeTitleMapping"
+    property_iri: "http://example.org/northwind#employeeTitle"
+    column_key: "column:northwind.public.employees.Title"
+    kind: "data"
+
+  - key: "mapping:prop:Employee.employeeTitleOfCourtesy"
+    label: "EmployeeTitleOfCourtesyMapping"
+    property_iri: "http://example.org/northwind#employeeTitleOfCourtesy"
+    column_key: "column:northwind.public.employees.TitleOfCourtesy"
+    kind: "data"
+
+  - key: "mapping:prop:Employee.employeeBirthDate"
+    label: "EmployeeBirthDateMapping"
+    property_iri: "http://example.org/northwind#employeeBirthDate"
+    column_key: "column:northwind.public.employees.BirthDate"
+    kind: "data"
+
+  - key: "mapping:prop:Employee.employeeHireDate"
+    label: "EmployeeHireDateMapping"
+    property_iri: "http://example.org/northwind#employeeHireDate"
+    column_key: "column:northwind.public.employees.HireDate"
+    kind: "data"
+
+  - key: "mapping:prop:Employee.employeeAddress"
+    label: "EmployeeAddressMapping"
+    property_iri: "http://example.org/northwind#employeeAddress"
+    column_key: "column:northwind.public.employees.Address"
+    kind: "data"
+
+  - key: "mapping:prop:Employee.employeeCity"
+    label: "EmployeeCityMapping"
+    property_iri: "http://example.org/northwind#employeeCity"
+    column_key: "column:northwind.public.employees.City"
+    kind: "data"
+
+  - key: "mapping:prop:Employee.employeeRegion"
+    label: "EmployeeRegionMapping"
+    property_iri: "http://example.org/northwind#employeeRegion"
+    column_key: "column:northwind.public.employees.Region"
+    kind: "data"
+
+  - key: "mapping:prop:Employee.employeePostalCode"
+    label: "EmployeePostalCodeMapping"
+    property_iri: "http://example.org/northwind#employeePostalCode"
+    column_key: "column:northwind.public.employees.PostalCode"
+    kind: "data"
+
+  - key: "mapping:prop:Employee.employeeCountry"
+    label: "EmployeeCountryMapping"
+    property_iri: "http://example.org/northwind#employeeCountry"
+    column_key: "column:northwind.public.employees.Country"
+    kind: "data"
+
+  - key: "mapping:prop:Employee.employeeHomePhone"
+    label: "EmployeeHomePhoneMapping"
+    property_iri: "http://example.org/northwind#employeeHomePhone"
+    column_key: "column:northwind.public.employees.HomePhone"
+    kind: "data"
+
+  - key: "mapping:prop:Employee.employeeExtension"
+    label: "EmployeeExtensionMapping"
+    property_iri: "http://example.org/northwind#employeeExtension"
+    column_key: "column:northwind.public.employees.Extension"
+    kind: "data"
+
+  # Shipper data properties
+  - key: "mapping:prop:Shipper.shipperId"
+    label: "ShipperIdMapping"
+    property_iri: "http://example.org/northwind#shipperId"
+    column_key: "column:northwind.public.shippers.ShipperID"
+    kind: "data"
+
+  - key: "mapping:prop:Shipper.shipperCompanyName"
+    label: "ShipperCompanyNameMapping"
+    property_iri: "http://example.org/northwind#shipperCompanyName"
+    column_key: "column:northwind.public.shippers.CompanyName"
+    kind: "data"
+
+  - key: "mapping:prop:Shipper.shipperPhone"
+    label: "ShipperPhoneMapping"
+    property_iri: "http://example.org/northwind#shipperPhone"
+    column_key: "column:northwind.public.shippers.Phone"
+    kind: "data"
+
+  # Region data properties
+  - key: "mapping:prop:Region.regionId"
+    label: "RegionIdMapping"
+    property_iri: "http://example.org/northwind#regionId"
+    column_key: "column:northwind.public.regions.RegionID"
+    kind: "data"
+
+  - key: "mapping:prop:Region.hasRegionName"
+    label: "RegionDescriptionMapping"
+    property_iri: "http://example.org/northwind#hasRegionName"
+    column_key: "column:northwind.public.regions.RegionDescription"
+    kind: "data"
+
+  # Territory data properties
+  - key: "mapping:prop:Territory.territoryId"
+    label: "TerritoryIdMapping"
+    property_iri: "http://example.org/northwind#territoryId"
+    column_key: "column:northwind.public.territories.TerritoryID"
+    kind: "data"
+
+  - key: "mapping:prop:Territory.territoryDescription"
+    label: "TerritoryDescriptionMapping"
+    property_iri: "http://example.org/northwind#territoryDescription"
+    column_key: "column:northwind.public.territories.TerritoryDescription"
+    kind: "data"
+
+  # CustomerDemographic data properties
+  - key: "mapping:prop:CustomerDemographic.customerTypeId"
+    label: "CustomerTypeIdMapping"
+    property_iri: "http://example.org/northwind#customerTypeId"
+    column_key: "column:northwind.public.customer_demographics.CustomerTypeID"
+    kind: "data"
+
+  - key: "mapping:prop:CustomerDemographic.customerDesc"
+    label: "CustomerDemographicDescMapping"
+    property_iri: "http://example.org/northwind#customerDesc"
+    column_key: "column:northwind.public.customer_demographics.CustomerDesc"
+    kind: "data"
+
+  # ========================================================================
+  # OBJECT PROPERTY MAPPINGS (FK-based relationships)
+  # ========================================================================
+
+  - key: "mapping:prop:Order.orderCustomer"
+    label: "OrderCustomerFKMapping"
+    property_iri: "http://example.org/northwind#orderCustomer"
+    column_key: "column:northwind.public.orders.CustomerID"
+    kind: "object_fk"
+    target_class_iri: "http://example.org/northwind#Customer"
+    target_table_key: "table:northwind.public.customers"
+    target_join_column_name: "CustomerID"
+
+  - key: "mapping:prop:Order.orderEmployee"
+    label: "OrderEmployeeFKMapping"
+    property_iri: "http://example.org/northwind#orderEmployee"
+    column_key: "column:northwind.public.orders.EmployeeID"
+    kind: "object_fk"
+    target_class_iri: "http://example.org/northwind#Employee"
+    target_table_key: "table:northwind.public.employees"
+    target_join_column_name: "EmployeeID"
+
+  - key: "mapping:prop:Order.orderShipper"
+    label: "OrderShipperFKMapping"
+    property_iri: "http://example.org/northwind#orderShipper"
+    column_key: "column:northwind.public.orders.ShipVia"
+    kind: "object_fk"
+    target_class_iri: "http://example.org/northwind#Shipper"
+    target_table_key: "table:northwind.public.shippers"
+    target_join_column_name: "ShipperID"
+
+  - key: "mapping:prop:OrderDetail.detailOfOrder"
+    label: "DetailOrderFKMapping"
+    property_iri: "http://example.org/northwind#detailOfOrder"
+    column_key: "column:northwind.public.order_details.OrderID"
+    kind: "object_fk"
+    target_class_iri: "http://example.org/northwind#Order"
+    target_table_key: "table:northwind.public.orders"
+    target_join_column_name: "OrderID"
+
+  - key: "mapping:prop:OrderDetail.detailProduct"
+    label: "DetailProductFKMapping"
+    property_iri: "http://example.org/northwind#detailProduct"
+    column_key: "column:northwind.public.order_details.ProductID"
+    kind: "object_fk"
+    target_class_iri: "http://example.org/northwind#Product"
+    target_table_key: "table:northwind.public.products"
+    target_join_column_name: "ProductID"
+
+  - key: "mapping:prop:Product.productCategory"
+    label: "ProductCategoryFKMapping"
+    property_iri: "http://example.org/northwind#productCategory"
+    column_key: "column:northwind.public.products.CategoryID"
+    kind: "object_fk"
+    target_class_iri: "http://example.org/northwind#Category"
+    target_table_key: "table:northwind.public.categories"
+    target_join_column_name: "CategoryID"
+
+  - key: "mapping:prop:Product.productSupplier"
+    label: "ProductSupplierFKMapping"
+    property_iri: "http://example.org/northwind#productSupplier"
+    column_key: "column:northwind.public.products.SupplierID"
+    kind: "object_fk"
+    target_class_iri: "http://example.org/northwind#Supplier"
+    target_table_key: "table:northwind.public.suppliers"
+    target_join_column_name: "SupplierID"
+
+  - key: "mapping:prop:Territory.territoryRegion"
+    label: "TerritoryRegionFKMapping"
+    property_iri: "http://example.org/northwind#territoryRegion"
+    column_key: "column:northwind.public.territories.RegionID"
+    kind: "object_fk"
+    target_class_iri: "http://example.org/northwind#Region"
+    target_table_key: "table:northwind.public.regions"
+    target_join_column_name: "RegionID"

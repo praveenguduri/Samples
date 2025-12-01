@@ -1,0 +1,736 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex:   <http://example.org/northwind#> .
+
+#################################################################
+# Ontology header
+#################################################################
+
+ex:NorthwindOntology a owl:Ontology ;
+    rdfs:label "Northwind Database Ontology" ;
+    rdfs:comment "A more complete OWL ontology representing the classic Northwind sample database schema and semantics." .
+
+#################################################################
+# Top-level abstract classes
+#################################################################
+
+ex:Thing a owl:Class ;
+    rdfs:label "Thing" ;
+    rdfs:comment "Top-level abstraction for all domain entities." .
+
+ex:Party a owl:Class ;
+    rdfs:subClassOf ex:Thing ;
+    rdfs:label "Party" ;
+    rdfs:comment "An entity that can participate in business relationships (persons, organizations)." .
+
+ex:Organization a owl:Class ;
+    rdfs:subClassOf ex:Party ;
+    rdfs:label "Organization" ;
+    rdfs:comment "A business organization (customer, supplier, shipper, etc.)." .
+
+ex:Person a owl:Class ;
+    rdfs:subClassOf ex:Party ;
+    rdfs:label "Person" ;
+    rdfs:comment "A human being (employee, contact person)." .
+
+ex:ContactInfo a owl:Class ;
+    rdfs:subClassOf ex:Thing ;
+    rdfs:label "Contact Info" ;
+    rdfs:comment "Contact attributes like phone, fax, email." .
+
+ex:Address a owl:Class ;
+    rdfs:subClassOf ex:Thing ;
+    rdfs:label "Address" ;
+    rdfs:comment "Structured address information." .
+
+ex:GeographicArea a owl:Class ;
+    rdfs:subClassOf ex:Thing ;
+    rdfs:label "Geographic Area" ;
+    rdfs:comment "Abstract parent for regions, territories, cities, countries." .
+
+#################################################################
+# Core Northwind classes
+#################################################################
+
+ex:Customer a owl:Class ;
+    rdfs:subClassOf ex:Organization ;
+    rdfs:label "Customer" ;
+    rdfs:comment "A customer who places orders." .
+
+ex:CustomerDemographic a owl:Class ;
+    rdfs:subClassOf ex:Thing ;
+    rdfs:label "Customer Demographic" ;
+    rdfs:comment "Customer demographic profile (CustomerCustomerDemo table)." .
+
+ex:Order a owl:Class ;
+    rdfs:subClassOf ex:Thing ;
+    rdfs:label "Order" ;
+    rdfs:comment "A sales order placed by a customer." .
+
+ex:OrderDetail a owl:Class ;
+    rdfs:subClassOf ex:Thing ;
+    rdfs:label "Order Detail" ;
+    rdfs:comment "Line item within an order that references a product." .
+
+ex:Product a owl:Class ;
+    rdfs:subClassOf ex:Thing ;
+    rdfs:label "Product" ;
+    rdfs:comment "A product sold by the company." .
+
+ex:Category a owl:Class ;
+    rdfs:subClassOf ex:Thing ;
+    rdfs:label "Category" ;
+    rdfs:comment "Category to which products belong." .
+
+ex:Supplier a owl:Class ;
+    rdfs:subClassOf ex:Organization ;
+    rdfs:label "Supplier" ;
+    rdfs:comment "A supplier providing products." .
+
+ex:Employee a owl:Class ;
+    rdfs:subClassOf ex:Person ;
+    rdfs:label "Employee" ;
+    rdfs:comment "An employee of the company." .
+
+ex:Shipper a owl:Class ;
+    rdfs:subClassOf ex:Organization ;
+    rdfs:label "Shipper" ;
+    rdfs:comment "A shipping company used to ship orders." .
+
+ex:Region a owl:Class ;
+    rdfs:subClassOf ex:GeographicArea ;
+    rdfs:label "Region" ;
+    rdfs:comment "Sales region to which territories belong." .
+
+ex:Territory a owl:Class ;
+    rdfs:subClassOf ex:GeographicArea ;
+    rdfs:label "Territory" ;
+    rdfs:comment "Sales territory assigned to employees." .
+
+#################################################################
+# Higher-level generic datatype properties
+#################################################################
+
+ex:hasId a owl:DatatypeProperty ;
+    rdfs:label "hasId" ;
+    rdfs:comment "Generic identifier property; super-property for specific IDs." .
+
+ex:hasName a owl:DatatypeProperty ;
+    rdfs:label "hasName" ;
+    rdfs:comment "Generic name property; super-property for specific names." .
+
+ex:hasDescription a owl:DatatypeProperty ;
+    rdfs:label "hasDescription" ;
+    rdfs:comment "Generic description property." .
+
+ex:hasPhone a owl:DatatypeProperty ;
+    rdfs:label "hasPhone" ;
+    rdfs:comment "Generic phone number property." .
+
+ex:hasFax a owl:DatatypeProperty ;
+    rdfs:label "hasFax" ;
+    rdfs:comment "Generic fax number property." .
+
+ex:hasAddressLine a owl:DatatypeProperty ;
+    rdfs:label "hasAddressLine" ;
+    rdfs:domain ex:Address ;
+    rdfs:range xsd:string .
+
+ex:hasCity a owl:DatatypeProperty ;
+    rdfs:label "hasCity" ;
+    rdfs:domain ex:Address ;
+    rdfs:range xsd:string .
+
+ex:hasRegionName a owl:DatatypeProperty ;
+    rdfs:label "hasRegionName" ;
+    rdfs:domain ex:Region ;
+    rdfs:range xsd:string .
+
+ex:hasPostalCode a owl:DatatypeProperty ;
+    rdfs:label "hasPostalCode" ;
+    rdfs:domain ex:Address ;
+    rdfs:range xsd:string .
+
+ex:hasCountry a owl:DatatypeProperty ;
+    rdfs:label "hasCountry" ;
+    rdfs:domain ex:Address ;
+    rdfs:range xsd:string .
+
+#################################################################
+# Customer-specific datatype properties
+#################################################################
+
+ex:customerId a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "customerId" ;
+    rdfs:domain ex:Customer ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasId .
+
+ex:customerCompanyName a owl:DatatypeProperty ;
+    rdfs:label "customerCompanyName" ;
+    rdfs:domain ex:Customer ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasName .
+
+ex:customerContactName a owl:DatatypeProperty ;
+    rdfs:label "customerContactName" ;
+    rdfs:domain ex:Customer ;
+    rdfs:range xsd:string .
+
+ex:customerContactTitle a owl:DatatypeProperty ;
+    rdfs:label "customerContactTitle" ;
+    rdfs:domain ex:Customer ;
+    rdfs:range xsd:string .
+
+ex:customerPhone a owl:DatatypeProperty ;
+    rdfs:label "customerPhone" ;
+    rdfs:domain ex:Customer ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasPhone .
+
+ex:customerFax a owl:DatatypeProperty ;
+    rdfs:label "customerFax" ;
+    rdfs:domain ex:Customer ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasFax .
+
+ex:customerAddress a owl:DatatypeProperty ;
+    rdfs:label "customerAddress" ;
+    rdfs:domain ex:Customer ;
+    rdfs:range xsd:string .
+
+ex:customerCity a owl:DatatypeProperty ;
+    rdfs:label "customerCity" ;
+    rdfs:domain ex:Customer ;
+    rdfs:range xsd:string .
+
+ex:customerRegion a owl:DatatypeProperty ;
+    rdfs:label "customerRegion" ;
+    rdfs:domain ex:Customer ;
+    rdfs:range xsd:string .
+
+ex:customerPostalCode a owl:DatatypeProperty ;
+    rdfs:label "customerPostalCode" ;
+    rdfs:domain ex:Customer ;
+    rdfs:range xsd:string .
+
+ex:customerCountry a owl:DatatypeProperty ;
+    rdfs:label "customerCountry" ;
+    rdfs:domain ex:Customer ;
+    rdfs:range xsd:string .
+
+#################################################################
+# CustomerDemographic datatype properties
+#################################################################
+
+ex:customerTypeId a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "customerTypeId" ;
+    rdfs:domain ex:CustomerDemographic ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasId .
+
+ex:customerDesc a owl:DatatypeProperty ;
+    rdfs:label "customerDesc" ;
+    rdfs:domain ex:CustomerDemographic ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasDescription .
+
+#################################################################
+# Order datatype properties
+#################################################################
+
+ex:orderId a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "orderId" ;
+    rdfs:domain ex:Order ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf ex:hasId .
+
+ex:orderDate a owl:DatatypeProperty ;
+    rdfs:label "orderDate" ;
+    rdfs:domain ex:Order ;
+    rdfs:range xsd:dateTime .
+
+ex:requiredDate a owl:DatatypeProperty ;
+    rdfs:label "requiredDate" ;
+    rdfs:domain ex:Order ;
+    rdfs:range xsd:dateTime .
+
+ex:shippedDate a owl:DatatypeProperty ;
+    rdfs:label "shippedDate" ;
+    rdfs:domain ex:Order ;
+    rdfs:range xsd:dateTime .
+
+ex:freight a owl:DatatypeProperty ;
+    rdfs:label "freight" ;
+    rdfs:domain ex:Order ;
+    rdfs:range xsd:decimal .
+
+ex:shipName a owl:DatatypeProperty ;
+    rdfs:label "shipName" ;
+    rdfs:domain ex:Order ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasName .
+
+ex:orderShipAddress a owl:DatatypeProperty ;
+    rdfs:label "orderShipAddress" ;
+    rdfs:domain ex:Order ;
+    rdfs:range xsd:string .
+
+ex:orderShipCity a owl:DatatypeProperty ;
+    rdfs:label "orderShipCity" ;
+    rdfs:domain ex:Order ;
+    rdfs:range xsd:string .
+
+ex:orderShipRegion a owl:DatatypeProperty ;
+    rdfs:label "orderShipRegion" ;
+    rdfs:domain ex:Order ;
+    rdfs:range xsd:string .
+
+ex:orderShipPostalCode a owl:DatatypeProperty ;
+    rdfs:label "orderShipPostalCode" ;
+    rdfs:domain ex:Order ;
+    rdfs:range xsd:string .
+
+ex:orderShipCountry a owl:DatatypeProperty ;
+    rdfs:label "orderShipCountry" ;
+    rdfs:domain ex:Order ;
+    rdfs:range xsd:string .
+
+#################################################################
+# Product datatype properties
+#################################################################
+
+ex:productId a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "productId" ;
+    rdfs:domain ex:Product ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf ex:hasId .
+
+ex:productName a owl:DatatypeProperty ;
+    rdfs:label "productName" ;
+    rdfs:domain ex:Product ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasName .
+
+ex:quantityPerUnit a owl:DatatypeProperty ;
+    rdfs:label "quantityPerUnit" ;
+    rdfs:domain ex:Product ;
+    rdfs:range xsd:string .
+
+ex:unitPrice a owl:DatatypeProperty ;
+    rdfs:label "unitPrice" ;
+    rdfs:domain ex:Product ;
+    rdfs:range xsd:decimal .
+
+ex:unitsInStock a owl:DatatypeProperty ;
+    rdfs:label "unitsInStock" ;
+    rdfs:domain ex:Product ;
+    rdfs:range xsd:int .
+
+ex:unitsOnOrder a owl:DatatypeProperty ;
+    rdfs:label "unitsOnOrder" ;
+    rdfs:domain ex:Product ;
+    rdfs:range xsd:int .
+
+ex:reorderLevel a owl:DatatypeProperty ;
+    rdfs:label "reorderLevel" ;
+    rdfs:domain ex:Product ;
+    rdfs:range xsd:int .
+
+ex:discontinued a owl:DatatypeProperty ;
+    rdfs:label "discontinued" ;
+    rdfs:domain ex:Product ;
+    rdfs:range xsd:boolean .
+
+#################################################################
+# OrderDetail datatype properties
+#################################################################
+
+ex:orderDetailUnitPrice a owl:DatatypeProperty ;
+    rdfs:label "orderDetailUnitPrice" ;
+    rdfs:domain ex:OrderDetail ;
+    rdfs:range xsd:decimal .
+
+ex:orderDetailQuantity a owl:DatatypeProperty ;
+    rdfs:label "orderDetailQuantity" ;
+    rdfs:domain ex:OrderDetail ;
+    rdfs:range xsd:int .
+
+ex:orderDetailDiscount a owl:DatatypeProperty ;
+    rdfs:label "orderDetailDiscount" ;
+    rdfs:domain ex:OrderDetail ;
+    rdfs:range xsd:decimal .
+
+#################################################################
+# Employee datatype properties
+#################################################################
+
+ex:employeeId a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "employeeId" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf ex:hasId .
+
+ex:employeeLastName a owl:DatatypeProperty ;
+    rdfs:label "employeeLastName" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range xsd:string .
+
+ex:employeeFirstName a owl:DatatypeProperty ;
+    rdfs:label "employeeFirstName" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range xsd:string .
+
+ex:employeeTitle a owl:DatatypeProperty ;
+    rdfs:label "employeeTitle" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range xsd:string .
+
+ex:employeeTitleOfCourtesy a owl:DatatypeProperty ;
+    rdfs:label "employeeTitleOfCourtesy" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range xsd:string .
+
+ex:employeeBirthDate a owl:DatatypeProperty ;
+    rdfs:label "employeeBirthDate" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range xsd:dateTime .
+
+ex:employeeHireDate a owl:DatatypeProperty ;
+    rdfs:label "employeeHireDate" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range xsd:dateTime .
+
+ex:employeeHomePhone a owl:DatatypeProperty ;
+    rdfs:label "employeeHomePhone" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasPhone .
+
+ex:employeeAddress a owl:DatatypeProperty ;
+    rdfs:label "employeeAddress" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range xsd:string .
+
+ex:employeeCity a owl:DatatypeProperty ;
+    rdfs:label "employeeCity" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range xsd:string .
+
+ex:employeeRegion a owl:DatatypeProperty ;
+    rdfs:label "employeeRegion" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range xsd:string .
+
+ex:employeePostalCode a owl:DatatypeProperty ;
+    rdfs:label "employeePostalCode" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range xsd:string .
+
+ex:employeeCountry a owl:DatatypeProperty ;
+    rdfs:label "employeeCountry" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range xsd:string .
+
+ex:employeeExtension a owl:DatatypeProperty ;
+    rdfs:label "employeeExtension" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range xsd:string .
+
+#################################################################
+# Category datatype properties
+#################################################################
+
+ex:categoryId a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "categoryId" ;
+    rdfs:domain ex:Category ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf ex:hasId .
+
+ex:categoryName a owl:DatatypeProperty ;
+    rdfs:label "categoryName" ;
+    rdfs:domain ex:Category ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasName .
+
+ex:categoryDescription a owl:DatatypeProperty ;
+    rdfs:label "categoryDescription" ;
+    rdfs:domain ex:Category ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasDescription .
+
+#################################################################
+# Supplier datatype properties
+#################################################################
+
+ex:supplierId a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "supplierId" ;
+    rdfs:domain ex:Supplier ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf ex:hasId .
+
+ex:supplierCompanyName a owl:DatatypeProperty ;
+    rdfs:label "supplierCompanyName" ;
+    rdfs:domain ex:Supplier ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasName .
+
+ex:supplierContactName a owl:DatatypeProperty ;
+    rdfs:label "supplierContactName" ;
+    rdfs:domain ex:Supplier ;
+    rdfs:range xsd:string .
+
+ex:supplierContactTitle a owl:DatatypeProperty ;
+    rdfs:label "supplierContactTitle" ;
+    rdfs:domain ex:Supplier ;
+    rdfs:range xsd:string .
+
+ex:supplierAddress a owl:DatatypeProperty ;
+    rdfs:label "supplierAddress" ;
+    rdfs:domain ex:Supplier ;
+    rdfs:range xsd:string .
+
+ex:supplierCity a owl:DatatypeProperty ;
+    rdfs:label "supplierCity" ;
+    rdfs:domain ex:Supplier ;
+    rdfs:range xsd:string .
+
+ex:supplierRegion a owl:DatatypeProperty ;
+    rdfs:label "supplierRegion" ;
+    rdfs:domain ex:Supplier ;
+    rdfs:range xsd:string .
+
+ex:supplierPostalCode a owl:DatatypeProperty ;
+    rdfs:label "supplierPostalCode" ;
+    rdfs:domain ex:Supplier ;
+    rdfs:range xsd:string .
+
+ex:supplierCountry a owl:DatatypeProperty ;
+    rdfs:label "supplierCountry" ;
+    rdfs:domain ex:Supplier ;
+    rdfs:range xsd:string .
+
+ex:supplierPhone a owl:DatatypeProperty ;
+    rdfs:label "supplierPhone" ;
+    rdfs:domain ex:Supplier ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasPhone .
+
+ex:supplierFax a owl:DatatypeProperty ;
+    rdfs:label "supplierFax" ;
+    rdfs:domain ex:Supplier ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasFax .
+
+#################################################################
+# Shipper datatype properties
+#################################################################
+
+ex:shipperId a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "shipperId" ;
+    rdfs:domain ex:Shipper ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf ex:hasId .
+
+ex:shipperCompanyName a owl:DatatypeProperty ;
+    rdfs:label "shipperCompanyName" ;
+    rdfs:domain ex:Shipper ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasName .
+
+ex:shipperPhone a owl:DatatypeProperty ;
+    rdfs:label "shipperPhone" ;
+    rdfs:domain ex:Shipper ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasPhone .
+
+#################################################################
+# Region & Territory datatype properties
+#################################################################
+
+ex:regionId a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "regionId" ;
+    rdfs:domain ex:Region ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf ex:hasId .
+
+ex:territoryId a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "territoryId" ;
+    rdfs:domain ex:Territory ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasId .
+
+ex:territoryDescription a owl:DatatypeProperty ;
+    rdfs:label "territoryDescription" ;
+    rdfs:domain ex:Territory ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ex:hasDescription .
+
+#################################################################
+# Generic object properties
+#################################################################
+
+ex:relatedTo a owl:ObjectProperty ;
+    rdfs:label "relatedTo" ;
+    rdfs:comment "Very generic relationship between Things." .
+
+ex:hasAddress a owl:ObjectProperty ;
+    rdfs:label "hasAddress" ;
+    rdfs:domain ex:Party ;
+    rdfs:range ex:Address ;
+    rdfs:subPropertyOf ex:relatedTo .
+
+ex:hasContactInfo a owl:ObjectProperty ;
+    rdfs:label "hasContactInfo" ;
+    rdfs:domain ex:Party ;
+    rdfs:range ex:ContactInfo ;
+    rdfs:subPropertyOf ex:relatedTo .
+
+#################################################################
+# Order-related object properties
+#################################################################
+
+ex:orderCustomer a owl:ObjectProperty ;
+    rdfs:label "orderCustomer" ;
+    rdfs:domain ex:Order ;
+    rdfs:range ex:Customer ;
+    rdfs:subPropertyOf ex:relatedTo .
+
+ex:customerOrder a owl:ObjectProperty ;
+    rdfs:label "customerOrder" ;
+    rdfs:domain ex:Customer ;
+    rdfs:range ex:Order ;
+    rdfs:subPropertyOf ex:relatedTo ;
+    owl:inverseOf ex:orderCustomer .
+
+ex:orderEmployee a owl:ObjectProperty ;
+    rdfs:label "orderEmployee" ;
+    rdfs:domain ex:Order ;
+    rdfs:range ex:Employee ;
+    rdfs:subPropertyOf ex:relatedTo .
+
+ex:employeeOrder a owl:ObjectProperty ;
+    rdfs:label "employeeOrder" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range ex:Order ;
+    rdfs:subPropertyOf ex:relatedTo ;
+    owl:inverseOf ex:orderEmployee .
+
+ex:orderShipper a owl:ObjectProperty ;
+    rdfs:label "orderShipper" ;
+    rdfs:domain ex:Order ;
+    rdfs:range ex:Shipper ;
+    rdfs:subPropertyOf ex:relatedTo .
+
+ex:shipperOrder a owl:ObjectProperty ;
+    rdfs:label "shipperOrder" ;
+    rdfs:domain ex:Shipper ;
+    rdfs:range ex:Order ;
+    rdfs:subPropertyOf ex:relatedTo ;
+    owl:inverseOf ex:orderShipper .
+
+# Order ↔ OrderDetail
+
+ex:orderHasDetail a owl:ObjectProperty ;
+    rdfs:label "orderHasDetail" ;
+    rdfs:domain ex:Order ;
+    rdfs:range ex:OrderDetail ;
+    rdfs:subPropertyOf ex:relatedTo .
+
+ex:detailOfOrder a owl:ObjectProperty ;
+    rdfs:label "detailOfOrder" ;
+    rdfs:domain ex:OrderDetail ;
+    rdfs:range ex:Order ;
+    rdfs:subPropertyOf ex:relatedTo ;
+    owl:inverseOf ex:orderHasDetail .
+
+#################################################################
+# Product-related object properties
+#################################################################
+
+ex:detailProduct a owl:ObjectProperty ;
+    rdfs:label "detailProduct" ;
+    rdfs:domain ex:OrderDetail ;
+    rdfs:range ex:Product ;
+    rdfs:subPropertyOf ex:relatedTo .
+
+ex:productCategory a owl:ObjectProperty ;
+    rdfs:label "productCategory" ;
+    rdfs:domain ex:Product ;
+    rdfs:range ex:Category ;
+    rdfs:subPropertyOf ex:relatedTo .
+
+ex:categoryProduct a owl:ObjectProperty ;
+    rdfs:label "categoryProduct" ;
+    rdfs:domain ex:Category ;
+    rdfs:range ex:Product ;
+    rdfs:subPropertyOf ex:relatedTo ;
+    owl:inverseOf ex:productCategory .
+
+ex:productSupplier a owl:ObjectProperty ;
+    rdfs:label "productSupplier" ;
+    rdfs:domain ex:Product ;
+    rdfs:range ex:Supplier ;
+    rdfs:subPropertyOf ex:relatedTo .
+
+ex:supplierProduct a owl:ObjectProperty ;
+    rdfs:label "supplierProduct" ;
+    rdfs:domain ex:Supplier ;
+    rdfs:range ex:Product ;
+    rdfs:subPropertyOf ex:relatedTo ;
+    owl:inverseOf ex:productSupplier .
+
+#################################################################
+# Employee hierarchy and territories
+#################################################################
+
+ex:reportsTo a owl:ObjectProperty ;
+    rdfs:label "reportsTo" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range ex:Employee ;
+    rdfs:subPropertyOf ex:relatedTo .
+
+ex:employeeTerritory a owl:ObjectProperty ;
+    rdfs:label "employeeTerritory" ;
+    rdfs:domain ex:Employee ;
+    rdfs:range ex:Territory ;
+    rdfs:subPropertyOf ex:relatedTo .
+
+ex:territoryEmployee a owl:ObjectProperty ;
+    rdfs:label "territoryEmployee" ;
+    rdfs:domain ex:Territory ;
+    rdfs:range ex:Employee ;
+    rdfs:subPropertyOf ex:relatedTo ;
+    owl:inverseOf ex:employeeTerritory .
+
+ex:territoryRegion a owl:ObjectProperty ;
+    rdfs:label "territoryRegion" ;
+    rdfs:domain ex:Territory ;
+    rdfs:range ex:Region ;
+    rdfs:subPropertyOf ex:relatedTo .
+
+ex:regionTerritory a owl:ObjectProperty ;
+    rdfs:label "regionTerritory" ;
+    rdfs:domain ex:Region ;
+    rdfs:range ex:Territory ;
+    rdfs:subPropertyOf ex:relatedTo ;
+    owl:inverseOf ex:territoryRegion .
+
+#################################################################
+# Customer ↔ CustomerDemographic
+#################################################################
+
+ex:customerHasDemographic a owl:ObjectProperty ;
+    rdfs:label "customerHasDemographic" ;
+    rdfs:domain ex:Customer ;
+    rdfs:range ex:CustomerDemographic ;
+    rdfs:subPropertyOf ex:relatedTo .
+
+ex:demographicCustomer a owl:ObjectProperty ;
+    rdfs:label "demographicCustomer" ;
+    rdfs:domain ex:CustomerDemographic ;
+    rdfs:range ex:Customer ;
+    rdfs:subPropertyOf ex:relatedTo ;
+    owl:inverseOf ex:customerHasDemographic .
