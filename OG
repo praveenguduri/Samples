@@ -1,0 +1,250 @@
+# Ontology Class Builder — Design Flow
+
+## The Big Picture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    TERM LIBRARY                         │
+│         (extracted from data dictionaries)              │
+│                                                         │
+│  DOB  BIRTH_DT  cust_id  ACCT_BAL  account_status      │
+│  birth_date  CUST_NUM  open_date  CHRG_OFF_AMT  ...    │
+│                                                         │
+│  Status: UNASSIGNED                                     │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         │  Ontology Class Builder
+                         ▼
+┌─────────────────────────────────────────────────────────┐
+│                 ONTOLOGY CLASS BUILDER                  │
+│                                                         │
+│  Step 1          Step 2              Step 3             │
+│  Define Class → Add Properties  →  Review & Publish    │
+│                 (via term search)                       │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────┐
+│                  ONTOLOGY (OUTPUT)                      │
+│                                                         │
+│  Consumer                    Account                   │
+│    ├─ identifier               ├─ accountNumber        │
+│    ├─ dateOfBirth              ├─ openDate             │
+│    └─ address ──────────────→  └─ balance              │
+│              (relationship)                            │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Step 1: Define the Class
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  NEW CLASS                                              │
+│  ─────────────────────────────────────────────────────  │
+│                                                         │
+│  Name *          [ Consumer                      ]      │
+│  Label           [ Consumer / Borrower           ]      │
+│  Namespace       [ credit:          ▼            ]      │
+│                                                         │
+│  Parent Class    [ Search parent...           🔍 ]      │
+│                    ↳ semantic search existing classes   │
+│                                                         │
+│  Description *   [ Individual about whom credit  ]      │
+│                  [ information is compiled        ]      │
+│                                                         │
+│  Domain Tags     [ Credit ×] [ Fraud ×] [ +Add   ]      │
+│                                                         │
+│  Abstract?       [ No ▼ ]    Status  [ Draft ▼   ]      │
+│                                                         │
+│                            [ Save & Add Properties → ]  │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Key decisions at this step:**
+
+- **Name + namespace** establishes the canonical identity
+- **Parent class** enables inheritance — properties flow down
+- **Abstract flag** means base class only, never directly mapped to a dataset
+- **Description** is the seed for semantic search later
+
+---
+
+## Step 2: Add Properties via Term Search
+
+This is the core loop — repeated for every property:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  ADDING PROPERTIES TO: Consumer                         │
+│  ─────────────────────────────────────────────────────  │
+│                                                         │
+│  Search your term library:                              │
+│  [ date of birth                               🔍 ]     │
+│                                                         │
+│  Results (semantic match):                              │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │ ☐  DOB           Metro2 Dict    score: 0.97     │   │
+│  │ ☐  BIRTH_DT      Fraud System   score: 0.95     │   │
+│  │ ☐  birth_date    CRM Schema     score: 0.94     │   │
+│  │ ☐  date_of_birth Marketing DB   score: 0.93     │   │
+│  │ ☐  BDATE         Legacy Core    score: 0.81     │   │
+│  └─────────────────────────────────────────────────┘   │
+│                                                         │
+│  ↓ User selects all 5                                   │
+│                                                         │
+│  Canonical name:  [ dateOfBirth              ]          │
+│                     ↳ suggested from highest score      │
+│                                                         │
+│  Range Type:      [ Primitive  ▼             ]          │
+│    └─ Data Type:  [ date       ▼             ]          │
+│                                                         │
+│  Required: [No ▼]    PII: [Yes ▼]    Multi: [No ▼]     │
+│                                                         │
+│  Description: [ auto-filled from term with most        ]│
+│               [ context, editable                      ]│
+│                                                         │
+│                              [ Add to Consumer class → ]│
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## The Range Type Decision Branches
+
+```
+Range Type selected
+        │
+        ├─── Primitive ──────────────────────────────────────┐
+        │     └─ Pick data type                              │
+        │        string / integer / date /                   │
+        │        boolean / decimal                           │
+        │                                                    │
+        ├─── Enumeration ────────────────────────────────────┤
+        │     └─ Search or define allowed values             │
+        │        [ Search terms for "account status"... 🔍 ] │
+        │        Surfaces: Active, Closed, Delinquent,       │
+        │                  ChargedOff, Frozen                │
+        │        User confirms/edits the value set           │
+        │                                                    │
+        └─── Class Reference ────────────────────────────────┤
+              └─ Search existing classes                     │
+                 [ Search: "address"...              🔍 ]    │
+                 Surfaces: Address, MailingAddress           │
+                 User picks → becomes a RELATIONSHIP         │
+                 Relationship label: [ HAS_ADDRESS     ]     │
+                 Cardinality:        [ one-to-many  ▼  ]     │
+                                                             │
+                 ┌───────────────────────────────────────┐  │
+                 │ NOTE: This exits property space and   │  │
+                 │ creates a graph edge instead          │  │
+                 └───────────────────────────────────────┘  │
+                                                             │
+All paths → [ Add to Consumer class → ]─────────────────────┘
+```
+
+---
+
+## Step 3: Review & Publish
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  REVIEW: Consumer                                       │
+│  ─────────────────────────────────────────────────────  │
+│                                                         │
+│  Class Info                                             │
+│  Name: Consumer  │  Namespace: credit:                  │
+│  Parent: Person  │  Status: Draft                       │
+│                                                         │
+│  Properties (4)                          Terms Used     │
+│  ────────────────────────────────────────────────────   │
+│  identifier      string    required      3 terms  🔗    │
+│  dateOfBirth     date      PII           5 terms  🔗    │
+│  status          enum      required      4 terms  🔗    │
+│  address    →   Address    1:many        2 terms  🔗    │
+│                 (relationship)                          │
+│                                                         │
+│  Term Coverage                                          │
+│  ────────────────────────────────────────────────────   │
+│  14 terms promoted   ████████████░░░░  from this class  │
+│   6 terms unused     still in library unassigned        │
+│                                                         │
+│  Warnings                                               │
+│  ⚠️  address → Address class not yet published          │
+│  ⚠️  6 terms matched Consumer but not mapped            │
+│                                                         │
+│  [ ← Back ]    [ Save Draft ]    [ Publish Class →  ]  │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## What Happens After Publish
+
+```
+Published Class
+      │
+      ├──→  Neo4j gets OntologyClass node + Property nodes
+      │
+      ├──→  Term records updated: status UNASSIGNED → PROMOTED
+      │         + linked to canonical property
+      │         + source_class set to Consumer
+      │
+      ├──→  Class Reference properties become
+      │         relationship edges in Neo4j
+      │         (Consumer)-[:HAS_ADDRESS]->(Address)
+      │
+      └──→  Embeddings generated for
+                class description
+                each property (canonical + all synonym terms)
+                ready for semantic search in VKG
+```
+
+---
+
+## Overall State Machine for a Term
+
+```
+EXTRACTED
+   │
+   │  appears in search results
+   ▼
+CANDIDATE  ──── user ignores ────→  EXTRACTED (stays)
+   │
+   │  user selects + assigns to class
+   ▼
+PROMOTED
+   │  canonical name chosen
+   │  range defined
+   │  class assigned
+   ▼
+PUBLISHED  ──── class publishes ──→  ACTIVE in ontology
+   │
+   │  future: class deprecated
+   ▼
+DEPRECATED
+```
+
+---
+
+## Key Design Principles
+
+**1. Terms are the entry point, not properties**
+You never define a blank property form. You always start from a real extracted term.
+
+**2. Semantic search drives everything**
+Parent class lookup, range class lookup, synonym lookup — all semantic, never dropdown-only.
+
+**3. Class Reference = automatic relationship**
+The builder handles the pivot from property space to graph edge space transparently.
+
+**4. Coverage visibility**
+You can always see what % of your extracted terms have been promoted. The library shrinks as the ontology grows.
+
+**5. Draft → Publish gate**
+Nothing hits Neo4j until you explicitly publish. Lets you iterate freely.
+
+---
+
+*VKG Ontology Class Builder — Design Spec v1.0*
