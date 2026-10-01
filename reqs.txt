@@ -1,0 +1,21 @@
+# === Core: model loading + inference (injection_scorer.py, harness) ===
+torch>=2.2            # CPU wheels fine; for A100/L4 install the CUDA build per pytorch.org
+transformers>=4.44    # AutoModelForSequenceClassification, Trainer
+tokenizers>=0.19
+
+# DeBERTa-v3 uses a SentencePiece tokenizer — loading fails without these
+sentencepiece>=0.2.0
+protobuf>=4.25
+
+# === Fine-tuning (finetune_injection.py) ===
+datasets>=2.19        # Dataset.from_pandas + .map tokenization
+scikit-learn>=1.4     # train_test_split, precision_recall_fscore_support, recall_score
+pandas>=2.2
+numpy>=1.26
+accelerate>=0.30      # Trainer needs this for device placement / mixed precision
+
+# === LLM Guard path (only if you run through llm-guard, not the raw model) ===
+# llm-guard>=0.3.15   # pulls presidio + spacy — the 3.13 build pain. Uncomment if needed.
+
+# === Optional: rigorous token attribution (Integrated Gradients) ===
+# captum>=0.7         # only if you move beyond the occlusion method in injection_scorer.py
