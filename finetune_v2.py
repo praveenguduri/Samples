@@ -39,6 +39,7 @@ from sklearn.model_selection import train_test_split
 from transformers import (
     AutoModelForSequenceClassification,
     AutoTokenizer,
+    EarlyStoppingCallback,
     Trainer,
     TrainingArguments,
 )
@@ -86,7 +87,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", required=True, help="CSV with text,label columns")
     ap.add_argument("--out", default="./deepset-ft-v1")
-    ap.add_argument("--epochs", type=float, default=3.0)
+    ap.add_argument("--epochs", type=float, default=3.0,
+                    help="UPPER BOUND, not a target — early stopping halts sooner "
+                         "when eval F1 stops improving. For ~1k records, 2-3 is right.")
+    ap.add_argument("--patience", type=int, default=2,
+                    help="stop if eval F1 hasn't improved for this many epochs")
     ap.add_argument("--lr", type=float, default=2e-5)
     ap.add_argument("--batch", type=int, default=16)
     args = ap.parse_args()
@@ -142,6 +147,9 @@ def main():
         eval_dataset=eval_ds,
         compute_metrics=metrics,
         tokenizer=tokenizer,
+        # Stop once eval F1 plateaus — on a ~1k set this prevents grinding
+        # through epochs that only memorize the training data.
+        callbacks=[EarlyStoppingCallback(early_stopping_patience=args.patience)],
     )
 
     trainer.train()
